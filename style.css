@@ -1,0 +1,48 @@
+html  {
+    background-color:  #4F4A45;
+    font-family: sans-serif;
+    color: #F6F1EE;
+}
+
+/**
+CURRENT WEATHER BOX
+**/
+
+#current-weather{
+    background-color: #ed7c313a;
+    border-radius: 10px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 700px;
+    margin: auto;
+}
+
+h2{
+    text-transform: uppercase;
+    margin-left: 30px;
+}
+
+#curr-weather-box{
+    display: flex;
+    align-items: center;
+    font-size: 30pt;
+}
+
+
+
+#info-supp, #tmp-min-max{
+    font-size: 9pt;
+    
+}
+
+#tmp p{
+    margin : 0 10px;
+}
+
+#right-box{
+    text-align: right;
+    margin: auto 10px;
+    font-size: 18pt;
+}
+

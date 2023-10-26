@@ -11,7 +11,7 @@ Application web qui cherche sur [le site de prévision météo](https://www.prev
 
 ✔️ Event 'Entrée'
 
-❌ Météo actuelle
+🚧 Météo actuelle
 
 ❌ Météo de la journée
 
