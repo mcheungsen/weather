@@ -5,6 +5,51 @@ html  {
 }
 
 /**
+INPUT TEXT
+**/
+#menu{
+    display: flex;
+    justify-content: center;
+    margin : 50px 0;
+}
+
+#menu input[type='text'] {
+    border: none;
+    border-bottom : 1px solid white;
+    background: transparent;
+    outline: none;
+    color: white;
+    font-size: 18pt;
+    padding: 10px;
+}
+
+#menu button{
+    font-size:15pt;
+    padding: 10px 30px;
+    background-color: #ED7D31;
+    color: #F6F1EE;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#menu button:hover{
+    background-color: #6C5F5B;
+    color: #F6F1EE;
+}
+
+#data{
+    opacity: 0;
+    transition: opacity 0.2s;
+    margin-top: 30px;
+}
+
+#data.visible{
+    opacity: 1;
+}
+
+/**
 CURRENT WEATHER BOX
 **/
 
@@ -46,3 +91,13 @@ h2{
     font-size: 18pt;
 }
 
+/**
+MAP
+**/
+
+#map{
+    width: 500px;
+    height: 350px;
+    margin : auto;
+    padding: 0;
+}

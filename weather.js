@@ -38,12 +38,18 @@ function handleData(city) {
             }
             // use Data
             else {
-                doc.data.innerHTML = ""
-                getCurrentWeather(data)
-                getTodayWeather(data)
+                doc.data.classList.remove('visible');
+                setTimeout(function(){
+                    doc.data.innerHTML = ""
+                    getCurrentWeather(data)
+                    getTodayWeather(data)
+                    doc.data.classList.add('visible');
+                },200)
+
+                
             }
         })
-
+    
 }
 
 function getCurrentWeather(data) {
@@ -103,6 +109,22 @@ function init() {
             handleData(doc.text.value)
         }
     });
+
+    initMap();
+}
+
+function initMap(){
+    var map = L.map('map').setView([46.603354, 1.888334], 6);
+    L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+        attribution: 'CartoDB'
+      }).addTo(map);
+
+      map.on('click', function(e){
+        let latitude = e.latlng.lat;
+        let longitude = e.latlng.lng;
+        
+        console.log("latitude :" + latitude + " , longitude : " + longitude);
+      });
 }
 
 init();
