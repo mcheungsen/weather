@@ -4,6 +4,12 @@ html  {
     color: #F6F1EE;
 }
 
+h1{
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 5pt;
+}
+
 /**
 INPUT TEXT
 **/
@@ -89,6 +95,12 @@ h2{
     text-align: right;
     margin: auto 10px;
     font-size: 18pt;
+}
+
+
+#loading{
+    display: flex; 
+    justify-content: center;
 }
 
 /**

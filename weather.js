@@ -52,7 +52,15 @@ function handleData(city, codepost) {
                 },200)
             }
             else {
-                doc.data.innerHTML = "Pas trouvé."
+                doc.data.innerHTML = "";
+                let pendingData = document.createElement("div");
+                pendingData.style = "background-color: #ED7D31; display: inline-block; margin: auto";
+                let txt = document.createElement("p");
+                txt.textContent = "Pas trouvé, veuillez réessayer";
+                txt.style = "text-align: center";
+
+                pendingData.appendChild(txt);
+                doc.data.appendChild(pendingData);
             }
         })
     
@@ -145,6 +153,17 @@ function initMap(){
       }).addTo(map);
 
     map.on('click', function(e){
+        doc.data.innerHTML = "";
+        let pendingData = document.createElement("div");
+        pendingData.id = "loading"
+        let txt = document.createElement("p");
+        txt.textContent = "CHARGEMENT...";
+        txt.style = "text-align: center";
+
+        pendingData.appendChild(txt);
+        doc.data.appendChild(pendingData);
+        doc.data.classList.add('visible');
+
         let latitude = e.latlng.lat;
         let longitude = e.latlng.lng;
 
