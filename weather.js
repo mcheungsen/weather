@@ -42,8 +42,9 @@ function handleData(city, codepost) {
 
         })
         .then(data => {
+            doc.data.classList.remove('visible');
             if(data.fcst_day_0) { //il y a les bonnes données
-                doc.data.classList.remove('visible');
+                
                 setTimeout(function(){
                     doc.data.innerHTML = ""
                     getCurrentWeather(data)
@@ -52,18 +53,23 @@ function handleData(city, codepost) {
                 },200)
             }
             else {
-                doc.data.innerHTML = "";
-                let pendingData = document.createElement("div");
-                pendingData.style = "background-color: #ED7D31; display: inline-block; margin: auto";
-                let txt = document.createElement("p");
-                txt.textContent = "Pas trouvé, veuillez réessayer";
-                txt.style = "text-align: center";
+                showNotFind()              
 
-                pendingData.appendChild(txt);
-                doc.data.appendChild(pendingData);
             }
         })
     
+}
+
+function showNotFind(){
+    doc.data.innerHTML = "";
+    let div = document.createElement("div");
+    div.id = "loading"
+    let txt = document.createElement("p");
+    txt.textContent = "Pas trouvé, veuillez réessayer";
+
+    div.appendChild(txt);
+    doc.data.appendChild(div);
+    doc.data.classList.add('visible');
 }
 
 function getCurrentWeather(data) {
@@ -158,7 +164,6 @@ function initMap(){
         pendingData.id = "loading"
         let txt = document.createElement("p");
         txt.textContent = "CHARGEMENT...";
-        txt.style = "text-align: center";
 
         pendingData.appendChild(txt);
         doc.data.appendChild(pendingData);
@@ -193,6 +198,7 @@ function initMap(){
 
             })
             .catch(error => {
+                showNotFind()
                 console.error("Erreur lors de la récupération des données sur la map :", error);
             })
         console.log("latitude :" + latitude + " , longitude : " + longitude);
