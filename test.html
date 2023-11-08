@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Basemaps | CartoDB.js</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
+    <style>
+      html, body, .map {
+        height: 200px;
+        padding: 0;
+        margin: 0;
+        background-color: #D2DEF1;
+      }
+
+      h1 {
+        text-align: center;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 30px;
+      }
+
+      h2 {
+        text-align: center;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 24px;
+      }
+      
+      h3 {
+        text-align: center;
+        font-style: italic;
+        font-size: 20px;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.11/themes/css/cartodb.css" />
+  </head>
+  <body>
+    <h1><b># List of CartoDB basemaps #</b><h1>
+    <h2>Positron</h2>
+    <h3>http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png</h3>
+    <div class="map" id="map_positron"></div>
+    <h2>Dark matter</h2>
+    <h3>http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png</h3>
+    <div class="map" id="map_dark_matter"></div>
+    <h2>Positron (lite)</h2>
+    <h3>http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png</h3>
+    <div class="map" id="positron_lite_rainbow"></div>
+    <h2>Dark matter (lite)</h2>
+    <h3>http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png</h3>
+    <div class="map" id="dark_matter_lite_rainbow"></div>
+    <h2>CartoDB World Antique</h2>
+    <h3>https://cartocdn_{s}.global.ssl.fastly.net/base-antique/{z}/{x}/{y}.png</h3>
+    <div class="map" id="default_antique_cartodb"></div>
+    <h2>CartoDB World Eco</h2>
+    <h3>https://cartocdn_{s}.global.ssl.fastly.net/base-eco/{z}/{x}/{y}.png</h3>
+    <div class="map" id="eco_cartodb"></div>
+    <h2>CartoDB World Flat Blue</h2>
+    <h3>https://cartocdn_{s}.global.ssl.fastly.net/base-flatblue/{z}/{x}/{y}.png</h3>
+    <div class="map" id="flat_blue"></div>
+    <h2>CartoDB World Midnight Commander</h2>
+    <h3>https://cartocdn_{s}.global.ssl.fastly.net/base-midnight/{z}/{x}/{y}.png</h3>
+    <div class="map" id="midnight_cartodb"></div>
+
+    <!-- include cartodb.js library -->
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.11/cartodb.js"></script>
+
+    <script>
+      
+
+      function main() {
+
+        var options = { 
+          zoomControl: false,
+          scrollWheelZoom: false,
+          center: [43, 0],
+          zoomControl: true,
+          zoom: 3
+        };
+
+        var map_positron = L.map('map_positron', options);
+        L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+          attribution: 'Positron'
+        }).addTo(map_positron);
+
+        var map_dark_matter = L.map('map_dark_matter', options);
+        L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+          attribution: 'Dark matter'
+        }).addTo(map_dark_matter);
+
+        var positron_lite_rainbow = L.map('positron_lite_rainbow', options);
+        L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+          attribution: 'positron_lite_rainbow'
+        }).addTo(positron_lite_rainbow);
+
+        var dark_matter_lite_rainbow = L.map('dark_matter_lite_rainbow', options);
+        L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png', {
+          attribution: 'dark_matter_lite_rainbow'
+        }).addTo(dark_matter_lite_rainbow);
+
+        var default_antique_cartodb = L.map('default_antique_cartodb', options);
+        L.tileLayer('https://cartocdn_{s}.global.ssl.fastly.net/base-antique/{z}/{x}/{y}.png', {
+          attribution: 'default_antique_cartodb'
+        }).addTo(default_antique_cartodb);
+
+        var eco_cartodb = L.map('eco_cartodb', options);
+        L.tileLayer('https://cartocdn_{s}.global.ssl.fastly.net/base-eco/{z}/{x}/{y}.png', {
+          attribution: 'eco_cartodb'
+        }).addTo(eco_cartodb);
+
+        var flat_blue = L.map('flat_blue', options);
+        L.tileLayer('https://cartocdn_{s}.global.ssl.fastly.net/base-flatblue/{z}/{x}/{y}.png', {
+          attribution: 'flat_blue'
+        }).addTo(flat_blue);
+
+        var midnight_cartodb = L.map('midnight_cartodb', options);
+        L.tileLayer('https://cartocdn_{s}.global.ssl.fastly.net/base-midnight/{z}/{x}/{y}.png', {
+          attribution: 'midnight_cartodb'
+        }).addTo(midnight_cartodb);
+      }
+
+      window.onload = main;
+    </script>
+  </body>
+</html>

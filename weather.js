@@ -25,19 +25,24 @@ function getData(city) {
  * Handle data to get current weather
  * @param {*} city 
  */
-function handleData(city) {
+function handleData(city, codepost) {
     getData(city)
         .then(data => {
             return (data)
         })
         .then(data => {
             console.log(data)
-            // wrong value for city => error
+            // wrong value for city => double city ?
             if (data.errors) {
-                doc.data.innerHTML = "pas trouvé"
+                console.log("Seconde tentative : double city ?")
+                return getData(city+"-"+codepost)
             }
+            return data;
             // use Data
-            else {
+
+        })
+        .then(data => {
+            if(data.fcst_day_0) { //il y a les bonnes données
                 doc.data.classList.remove('visible');
                 setTimeout(function(){
                     doc.data.innerHTML = ""
@@ -45,8 +50,9 @@ function handleData(city) {
                     getTodayWeather(data)
                     doc.data.classList.add('visible');
                 },200)
-
-                
+            }
+            else {
+                doc.data.innerHTML = "Pas trouvé."
             }
         })
     
@@ -98,15 +104,34 @@ function getTodayWeather(data) {
 }
 
 /**
+ * Remove article (ex: La Rochelle)
+ * change " " to "-"
+ * remove accents (é,à,è,...)
+ * @param {*} name 
+ * @returns 
+ */
+function getValidName(name){
+    name = name.normalize('NFD')
+    .toLowerCase()
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/^(le|la|les)\s+/i, '')
+    .replace(/ /g, '-')
+    .replace(/'/g, '-');
+
+    console.log(name)
+    return name;
+}
+
+/**
  * Initialise events
  */
 function init() {
     doc.button.addEventListener('click', function () {
-        handleData(doc.text.value)
+        handleData(getValidName(doc.text.value))
     });
     document.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
-            handleData(doc.text.value)
+            handleData(getValidName(doc.text.value))
         }
     });
 
@@ -119,12 +144,41 @@ function initMap(){
         attribution: 'CartoDB'
       }).addTo(map);
 
-      map.on('click', function(e){
+    map.on('click', function(e){
         let latitude = e.latlng.lat;
         let longitude = e.latlng.lng;
+
+        let urlApi = 'https://nominatim.openstreetmap.org/reverse?format=json&lon=' + longitude + "&lat=" + latitude;
         
+        fetch(urlApi)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                let city = ""
+                // Get name town,city or village
+                if(data.address.town){
+                    city = data.address.town;
+                } else if(data.address.city){
+                    city = data.address.city
+                } else {
+                    city = data.address.village;
+                }
+                
+                console.log(city)
+                // Get postcode
+                let postcode = data.address.postcode
+
+                handleData(getValidName(city), postcode.substring(0,2))
+
+            })
+            .catch(error => {
+                console.error("Erreur lors de la récupération des données sur la map :", error);
+            })
         console.log("latitude :" + latitude + " , longitude : " + longitude);
-      });
+      
+    });
 }
 
 init();
