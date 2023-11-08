@@ -5,6 +5,8 @@ const doc = {
 }
 
 const api = "https://www.prevision-meteo.ch/services/json/"
+var map = L.map('map').setView([46.603354, 1.888334], 6);
+var marker = L.marker([44.8077,-0.5863]).addTo(map);
 
 
 /**
@@ -50,6 +52,7 @@ function handleData(city, codepost) {
                     getCurrentWeather(data)
                     getTodayWeather(data)
                     doc.data.classList.add('visible');
+                    zoomToLocation(data.city_info.latitude, data.city_info.longitude)
                 },200)
             }
             else {
@@ -136,6 +139,13 @@ function getValidName(name){
     return name;
 }
 
+function zoomToLocation(lat, long){
+    marker.remove()
+    console.log("try to zoom")
+    map.setView([lat, long], 12);
+    marker = L.marker([lat, long]).addTo(map);
+}
+
 /**
  * Initialise events
  */
@@ -150,15 +160,18 @@ function init() {
     });
 
     initMap();
+
+    handleData("Talence")
 }
 
 function initMap(){
-    var map = L.map('map').setView([46.603354, 1.888334], 6);
+
     L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
         attribution: 'CartoDB'
       }).addTo(map);
 
     map.on('click', function(e){
+        marker.remove()
         doc.data.innerHTML = "";
         let pendingData = document.createElement("div");
         pendingData.id = "loading"
@@ -171,6 +184,8 @@ function initMap(){
 
         let latitude = e.latlng.lat;
         let longitude = e.latlng.lng;
+
+        marker = L.marker([latitude, longitude]).addTo(map);
 
         let urlApi = 'https://nominatim.openstreetmap.org/reverse?format=json&lon=' + longitude + "&lat=" + latitude;
         
@@ -204,6 +219,7 @@ function initMap(){
         console.log("latitude :" + latitude + " , longitude : " + longitude);
       
     });
+
 }
 
 init();
